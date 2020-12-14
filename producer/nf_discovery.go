@@ -92,7 +92,7 @@ func NFDiscoveryProcedure(queryParameters url.Values) (response *models.SearchRe
 	// handle ipv4 & ipv6
 	if queryParameters["target-nf-type"][0] == "BSF" {
 		for i, nfProfile := range nfProfilesStruct {
-			if nfProfile.BsfInfo.Ipv4AddressRanges != nil {
+			if nfProfile.BsfInfo != nil && nfProfile.BsfInfo.Ipv4AddressRanges != nil {
 				for j := range *nfProfile.BsfInfo.Ipv4AddressRanges {
 					ipv4IntStart, err := strconv.Atoi((((*(*nfProfilesStruct[i].BsfInfo).Ipv4AddressRanges)[j]).Start))
 					if err != nil {
@@ -106,7 +106,7 @@ func NFDiscoveryProcedure(queryParameters url.Values) (response *models.SearchRe
 					((*(*nfProfilesStruct[i].BsfInfo).Ipv4AddressRanges)[j]).End = context.Ipv4IntToIpv4String(int64(ipv4IntEnd))
 				}
 			}
-			if nfProfile.BsfInfo.Ipv6PrefixRanges != nil {
+			if nfProfile.BsfInfo != nil && nfProfile.BsfInfo.Ipv6PrefixRanges != nil {
 				for j := range *nfProfile.BsfInfo.Ipv6PrefixRanges {
 					ipv6IntStart := new(big.Int)
 					ipv6IntStart.SetString(((*(*nfProfilesStruct[i].BsfInfo).Ipv6PrefixRanges)[j]).Start, 10)
